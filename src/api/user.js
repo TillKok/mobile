@@ -1,10 +1,10 @@
 /**
 *用户接口封装模块
 */
-import requset from '@/utils/requset'
+import request from '@/utils/request'
 
 export const login = ({ mobile, code }) => {
-  return requset({
+  return request({
     method: 'POST',
     url: '/app/v1_0/authorizations',
     data: {

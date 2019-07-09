@@ -25,7 +25,7 @@
       </van-cell-group>
       <!-- 按钮 -->
       <div class="login-btn-box">
-         <van-button type="info" class="login-btn">登录</van-button>
+         <van-button type="info" class="login-btn" @click.prevent="handleLogin">登录</van-button>
       </div>
       <!-- 按钮结束 -->
       <!-- 表单结束 -->
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { login } from '@/api/user'
 export default {
   name: 'LoginIndex',
   data () {
@@ -40,6 +41,17 @@ export default {
       user: {
         mobile: '',
         code: ''
+      }
+    }
+  },
+  methods: {
+    async handleLogin () {
+      try {
+        const res = await login(this.user)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+        console.log('登录失败')
       }
     }
   }
