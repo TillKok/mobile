@@ -39,16 +39,19 @@ export default {
   data () {
     return {
       user: {
-        mobile: '',
-        code: ''
+        mobile: '13174315966',
+        code: '123456'
       }
     }
   },
   methods: {
     async handleLogin () {
       try {
-        const res = await login(this.user)
-        console.log(res)
+        const data = await login(this.user)
+        this.$store.commit('setUser', data)
+        this.$router.push({
+          name: 'home'
+        })
       } catch (err) {
         console.log(err)
         console.log('登录失败')

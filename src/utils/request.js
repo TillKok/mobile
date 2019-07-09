@@ -10,7 +10,7 @@ request.interceptors.request.use(function (config) {
   return Promise.reject(error)
 })
 request.interceptors.response.use(function (response) {
-  return response
+  return response.data.data || response.data
 }, function (error) {
   return Promise.reject(error)
 })
