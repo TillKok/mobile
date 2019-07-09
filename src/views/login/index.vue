@@ -74,9 +74,9 @@ export default {
 
         const data = await login(this.user)
         this.$store.commit('setUser', data)
-        // this.$router.push({
-        //   name: 'home'
-        // })
+        this.$router.push({
+          name: 'home'
+        })
       } catch (err) {
         console.log(err)
         console.log('登录失败')
