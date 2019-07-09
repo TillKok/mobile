@@ -25,7 +25,7 @@
       </van-cell-group>
       <!-- 按钮 -->
       <div class="login-btn-box">
-         <van-button type="info" class="login-btn" @click.prevent="handleLogin">登录</van-button>
+         <van-button type="info" :loading="loginLoading" loading-text="登陆中..." class="login-btn" @click.prevent="handleLogin">登录</van-button>
       </div>
       <!-- 按钮结束 -->
       <!-- 表单结束 -->
@@ -41,21 +41,24 @@ export default {
       user: {
         mobile: '13174315966',
         code: '123456'
-      }
+      },
+      loginLoading: false
     }
   },
   methods: {
     async handleLogin () {
+      this.loginLoading = true
       try {
         const data = await login(this.user)
         this.$store.commit('setUser', data)
-        this.$router.push({
-          name: 'home'
-        })
+        // this.$router.push({
+        //   name: 'home'
+        // })
       } catch (err) {
         console.log(err)
         console.log('登录失败')
       }
+      this.loginLoading = false
     }
   }
 
