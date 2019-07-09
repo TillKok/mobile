@@ -13,14 +13,16 @@
           clearable
           label="手机号"
           placeholder="请输入手机号"
+          :error-message="errors.mobile"
         />
 
         <van-field
           v-model="user.code"
           type="password"
-          label="密码"
-          placeholder="请输入密码"
+          label="验证码"
+          placeholder="请输入验证码"
           required
+          :error-message="errors.code"
         />
       </van-cell-group>
       <!-- 按钮 -->
@@ -42,13 +44,34 @@ export default {
         mobile: '13174315966',
         code: '123456'
       },
-      loginLoading: false
+      loginLoading: false,
+      errors: {
+        mobile: '',
+        code: ''
+      }
     }
   },
   methods: {
     async handleLogin () {
       this.loginLoading = true
       try {
+        const { mobile, code } = this.user
+        const errors = this.errors
+        if (mobile.length) {
+          errors.mobile = ''
+        } else {
+          errors.mobile = '手机号不能为空'
+          return
+        }
+
+        if (code.length) {
+          errors.code = ''
+        } else {
+          errors.code = '验证码不能为空'
+          return
+        }
+        this.loginLoading = true
+
         const data = await login(this.user)
         this.$store.commit('setUser', data)
         // this.$router.push({
