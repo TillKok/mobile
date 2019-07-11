@@ -5,7 +5,10 @@
     <!-- 头部结束 -->
     <!-- 频道标签 -->
     <van-tabs class="channel-tabs" v-model="activeChannelIndex">
-      <van-tab title="标签 1">
+      <van-tab
+        v-for="channelItem in channels"
+        :key="channelItem.id"
+        :title="channelItem.name">
         <van-pull-refresh v-model="pullRefreshLoading" @refresh="onRefresh">
           <van-list
             v-model="loading"
@@ -22,9 +25,6 @@
         </van-pull-refresh>
 
       </van-tab>
-      <van-tab title="标签 2">内容 2</van-tab>
-      <van-tab title="标签 3">内容 3</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
     </van-tabs>
     <!-- 频道标签结束 -->
 
@@ -40,16 +40,21 @@
 </template>
 
 <script>
+import { getUserChannels } from '@/api/channel'
 export default {
   name: 'HomeIndex',
   data () {
     return {
+      channels: [],
       activeChannelIndex: 0,
       list: [],
       loading: false,
       finished: false,
       pullRefreshLoading: false
     }
+  },
+  created () {
+    this.loadChannels()
   },
   methods: {
     onLoad () {
@@ -69,6 +74,17 @@ export default {
       setTimeout(() => {
         this.pullRefreshLoading = false
       }, 3000)
+    },
+    async loadChannels () {
+      try {
+        const localChannels = window.localStorage.getItem('channels')
+        if (localChannels) {
+          this.channels = localChannels
+        } else {
+          this.channels = (await getUserChannels()).channels
+        }
+      } catch (err) {
+      }
     }
   }
 }
