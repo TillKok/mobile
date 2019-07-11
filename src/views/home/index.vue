@@ -78,8 +78,11 @@ export default {
   .channel-tabs {
     margin-bottom: 100px;
   }
-  .channel-tabs .van-tabs_wrap {
+  .channel-tabs /deep/ .van-tabs_wrap {
     position: fixed;
     top: 92px;
+  }
+  .channel-tabs /deep/ .van-tabs_content {
+    margin-top: 92px;
   }
 </style>
